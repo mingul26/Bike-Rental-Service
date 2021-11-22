@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general :: headerfiles"></th:block>
+    <title>Welcome</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container">
+    <!--/*@thymesVar id="userMessage" type=""*/-->
+    <div th:if="${userMessage}" th:utext="${userMessage}" class="alert alert-success text-center"></div>
+    <h1 class="py-5">Choose your location</h1>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col" th:each="office : ${offices}">
+            <div class="card">
+                <div class="card-body" th:href="@{/office/{location}/bike/list(location=${office.id})}">
+                    <h5 class="card-title" th:text="${office.address}">Office 1</h5>
+                    <a th:href="@{/office/{location}/bike/list(location=${office.id})}" class="btn btn-primary">Go to office</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>ID <i class="far fa-id-badge"></i></th>
+            <th>Location <i class="fas fa-map-marker-alt"></i></th>
+            <th>Manager Name</th>
+            <th>Email ID <i class="fas fa-envelope"></i></th>
+            <th>Phone Number <i class="fas fa-phone"></i></th>
+        </tr>
+        <tr th:if="${#lists.isEmpty(offices)}">
+            <td colspan="5">No Records found. Add some...!</td>
+        </tr>
+        <tr th:each="office : ${offices}">
+            <td th:text="${office.id}"></td>
+            <td><a th:href="@{/office/{location}/bike/list(location=${office.id})}" th:text="${office.address}"></a></td>
+            <td th:text="${office.managerName}"></td>
+            <td>
+                <div>
+                    <table class="table table-striped table-bordered">
+                        <tr th:each="email: ${office.emailBook}">
+                            <td th:text="${email.type}"></td>
+                            <td th:text="${email.value}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <table class="table table-striped table-bordered">
+                        <tr th:each="phoneNumber: ${office.phoneBook}">
+                            <td th:text="${phoneNumber.type}"></td>
+                            <td th:text="${phoneNumber.value}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+
+        </tr>
+    </table>
+
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

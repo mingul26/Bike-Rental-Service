@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general :: headerfiles"></th:block>
+    <title th:text="${update} ? 'Update Bike' : 'Add Bike'">Add Bike</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<div class="container">
+    <div class="row" style="height: 500px;">
+        <div class="col-sm-4 position-absolute top-50 start-50 translate-middle">
+            <div class="card">
+                <article class="card-body">
+                    <h4 class="card-title text-center">
+                        <span th:unless="${update}">
+                            Register a Bike
+                        </span>
+                        <span th:if="${update}">
+                            Update Details of a Bike
+                        </span>
+                    </h4>
+                    <hr>
+                    <div th:if="${success}" th:utext="${success}" class="alert alert-success text-center"></div>
+                    <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
+                    <form th:action="${update} ? '/home/updateBike' : '/home/addBike'" th:object="${bikeInfo}" method="post">
+                        <input type="hidden" name="currentLocation" th:field="*{sourceLocation}" th:value="${bikeInfo.sourceLocation}">
+                        <input type="hidden" th:if="update" th:field="*{id}" th:value="${bikeInfo.id}">
+                        <label class="form-label">Brand</label>
+                        <div class="input-group mb-3">
+                            <input required type="text" class="form-control" placeholder="Brand" aria-label="Brand" th:field="*{brand}">
+                        </div>
+
+                        <label for="model" class="form-label">Model</label>
+                        <div class="input-group mb-3">
+                            <input required type="text" class="form-control" id="model" placeholder="Model" aria-label="Model"  th:field="*{model}">
+                        </div>
+
+                        <label for="color" class="form-label">Color</label>
+                        <div class="input-group mb-3">
+                            <input required type="text" class="form-control" id="color" placeholder="Color" aria-label="Color" th:field="*{color}">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" th:unless="${update}">
+                            Add Bike
+                        </button>
+                        <th:block th:if="${update}">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Save Changes
+                            </button>
+                            <a th:href="@{/home/}" class="btn btn-outline-success">
+                                <span>
+                                    <i class="fas fa-times"></i>
+                                </span>
+                                Cancel
+                            </a>
+                        </th:block>
+                    </form>
+                </article>
+            </div> <!-- card.// -->
+
+        </div> <!-- col.// -->
+    </div> <!-- row.// -->
+</div>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

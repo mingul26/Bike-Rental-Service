@@ -1,0 +1,58 @@
+    <nav class="container-fluid navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">Biker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
+
+                <li th:if="${session.userType}" class="nav-item">
+                    <a th:if="${session.userType == 'user'}" class="nav-link " href="/dashboard" >Dashboard</a>
+                    <a th:if="${session.userType == 'office'}" class="nav-link " href="/home" >Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/office/}">View Cities</a>
+                </li>
+
+                <li th:if="${session.user}" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${session.user.firstName}">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/dashboard/update">Update Details</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+                <li th:if="${session.office}" class="nav-item">
+                    <a class="nav-link " href="/home/addBike">Add Bike</a>
+                </li>
+                <li th:if="${session.office}" class="nav-item">
+                    <a th:if="${session.userType == 'office'}"  class="nav-link " >
+                        <span th:text="${session.office.managerName}">
+                        </span>
+                        <span class="badge rounded-pill bg-warning">
+                            Manager
+                        </span>
+                    </a>
+                </li>
+                <li th:if="${session.userType}" class="nav-item">
+                    <a class="nav-link " href="/logout">Logout</a>
+                </li>
+                <li th:unless="${session.userType}" class="nav-item">
+                    <a class="nav-link " href="/login">Login</a>
+                </li>
+                <li th:unless="${session.userType}" class="nav-item">
+                    <a class="nav-link " href="/register">Register</a>
+                </li>
+
+            </ul>
+            <form class="d-none" >
+                <input class="form-control me-2" type="search" placeholder="Enter a city" aria-label="Search">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

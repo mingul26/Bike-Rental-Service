@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general.html :: headerfiles"></th:block>
+    <title>About</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, mate!</h1>
+        <p class="lead">
+           This is a simple web application that allows you to rent a bike from list of locations near you.
+        </p>
+        <hr class="my-4">
+        <p>
+            It offers you to rent a bike from list of locations near you. You can rent a bike from any location in the list. You can also return a bike to the same location. You can also see the list of all available bikes in the list. You can see your dashboard where you can see your active rentals and your history of rentals.
+        </p>
+        <p>
+            You can also see the list of all available bikes in the list. You can see your dashboard where you can see your active rentals and your history of rentals.
+        </p>
+        <p>
+            Developed by -
+        <hr>
+        Manish Kumar Gupt
+        <span class="badge rounded-pill bg-info ">
+            19075044
+        </span>
+        <hr>
+        I am in my pre-final year of graduation from IIT (BHU) Varanasi.
+        </p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+    </div>
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

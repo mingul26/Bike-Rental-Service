@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general.html :: headerfiles"></th:block>
+    <title>Reservation</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container">
+    <div th:if="${success}" th:utext="${success}" class="alert alert-success text-center"></div>
+    <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
+    <h1 class="py-5">Reserve your bike.</h1>
+    <h3>Fill this</h3>
+    <form th:unless="${status}" action="/reservation" th:object="${reservationInfo}" class="container-md col card p-4 mb-5" method="post">
+        <!--        Source Location Input-->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="*{pickupLocation.address}">Location</h5>
+                <input type="hidden" th:field="*{pickupLocation}" th:value="${reservationInfo.pickupLocation.id}"/>
+                <h6 class="card-subtitle mb-2 text-muted">Source Location</h6>
+            </div>
+        </div>
+        <!--        Bike Input-->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="*{bike.brand} + ', ' + *{bike.model}">Bike</h5>
+                <input type="hidden" th:field="*{bike}" th:value="${reservationInfo.bike.id}"/>
+                <h6 class="card-subtitle mb-2 text-muted">Brand, Model</h6>
+            </div>
+        </div>
+
+        <!--        Return Location Input-->
+        <div class="form-group">
+            <label for="returnLocation">Target Location</label>
+            <select id="returnLocation" required th:field="*{returnLocation}" class="form-control">
+            <option selected hidden value="">Select an option</option>
+            <option th:each="location : ${officeList}" th:value="${location.id}" th:text="${location.address}"></option>
+            </select>
+        </div>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-outline-success">Reserve</button>
+        </div>
+    </form>
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general.html :: headerfiles"></th:block>
+    <title>Dashboard</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container">
+    <div class="container">
+        <div class="jumbotron">
+            <div th:if="${success}" th:utext="${success}" class="alert alert-success text-center"></div>
+            <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
+            <h2>Welcome to your dashboard <span th:text="${office.managerName}" ></span></h2>
+        </div>
+        <div class="row row-cols-1 row-cols-md-1 g-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Active  Reservations</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            <div class="col" th:each="booking : ${activeRes}">
+                                <div class="card">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <div class="card-body">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <span>
+                                                            <i class="fas fa-bicycle"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text" th:text="${booking.bike.brand}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.model}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.color}">Bike Details</p>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <form action="/reserve" class="row row-cols-lg-auto g-3 align-items-center">
+                                                            <input type="hidden" name="id" th:value="${booking.bike.id}">
+                                                            <input type="hidden" name="officeId" th:value="${office.id}">
+                                                            <div class="col-12">
+                                                                <button type="submit" name="return" class="btn btn-outline-success btn-sm">Accept Bike</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                        <span class="badge rounded-pill bg-warning">
+                                            Source
+                                        </span>
+                                                <h5 class="card-title" th:text="${booking.pickupLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.pickupTimestamp}">Time</small></p>
+                                                <hr>
+                                                <span class="badge rounded-pill bg-info">
+                                            Destination
+                                        </span>
+                                                <h5 class="card-title" th:text="${booking.returnLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.returnTimestamp}">Time</small></p>
+                                                <p class="card-text" th:text="'₹ ' + ${booking.amount}">Amount</p>
+                                                <p class="card-text">
+                                                    reserved by -
+                                                    <span class="badge rounded-pill bg-secondary" th:text="${booking.customer.firstName}">Customer</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Bikes Available Here</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-1 row-cols-md-4 g-4">
+                            <div class="col" th:each="bike : ${bikes}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span th:if="${bike.availability == true}" class="badge rounded-pill bg-success">
+                                            Available
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span th:unless="${bike.availability == true}" class="badge rounded-pill bg-danger">
+                                            Unavailable
+                                            <i class="fas fa-times"></i>
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text" th:text="${bike.brand} + ' ' + ${bike.model} + ' ' + ${bike.color}">Bike Details</p>
+                                        <a th:href="@{/home/updateBike/{bike}(bike=${bike.id})}" class="btn btn-outline-danger btn-sm">
+                                            <span>
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                            Edit Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Completed drops here</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <div class="col" th:each="booking : ${completedDrops}">
+                                <div class="card">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <div class="card-body">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                    <span>
+                                                        <i class="fas fa-bicycle"></i>
+                                                    </span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text" th:text="${booking.bike.brand}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.model}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.color}">Bike Details</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <span class="badge rounded-pill bg-warning">
+                                                    Source
+                                                </span>
+                                                <h5 class="card-title" th:text="${booking.pickupLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.pickupTimestamp}">Time</small></p>
+                                                <hr>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.returnTimestamp}">Time</small></p>
+                                                <p class="card-text" th:text="'₹ ' + ${booking.amount}">Amount</p>
+                                                <p class="card-text">
+                                                    reserved by -
+                                                    <span class="badge rounded-pill bg-secondary" th:text="${booking.customer.firstName}">Customer</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Completed Pickups from here</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <div class="col" th:each="booking : ${completedPickups}">
+                                <div class="card">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <div class="card-body">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                    <span>
+                                                        <i class="fas fa-bicycle"></i>
+                                                    </span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text" th:text="${booking.bike.brand}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.model}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.color}">Bike Details</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.pickupTimestamp}">Time</small></p>
+                                                <hr>
+                                                <span class="badge rounded-pill bg-info">
+                                                    Destination
+                                                </span>
+                                                <h5 class="card-title" th:text="${booking.returnLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.returnTimestamp}">Time</small></p>
+                                                <p class="card-text" th:text="'₹ ' + ${booking.amount}">Amount</p>
+                                                <p class="card-text">
+                                                    reserved by -
+                                                    <span class="badge rounded-pill bg-secondary" th:text="${booking.customer.firstName}">Customer</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

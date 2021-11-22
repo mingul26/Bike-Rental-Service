@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general.html :: headerfiles"></th:block>
+    <title th:text="'Bikes at ' + ${office.address}">Welcome</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container">
+    <div class="container jumbotron">
+        <h2 th:text="'You are at ' + ${office.address}"></h2>
+    </div>
+    <hr>
+    <div th:if="${success}" th:utext="${success}" class="alert alert-success text-center"></div>
+    <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
+    <div id="availableList" th:unless="${#lists.isEmpty(bikes)}">
+        <h1 class="py-5" th:text="'Choose your Bike from ' + ${office.address}">Choose your Bike</h1>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col" th:each="bike : ${bikes}">
+                <div class="card">
+                    <div th:if="${bike.availability} == true" class="border-success">
+                        <div class="card-header">
+                        <span class="badge rounded-pill bg-primary">
+                            Available
+                            <i class="fas fa-check"></i>
+                        </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text" th:text="${bike.brand} + ' ' + ${bike.model} + ' ' + ${bike.color}">Bike Details</p>
+                            <form action="/reserve" >
+                                <input type="hidden" name="id" th:value="${bike.id}">
+                                <input type="hidden" name="officeId" th:value="${office.id}">
+                                <button type="submit" name="reserve" class="btn btn-outline-primary btn-sm">Reserve</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div th:if="${bike.availability} == false" class="border-danger">
+                        <div class="card-header">
+                        <span class="badge rounded-pill bg-danger">
+                            Unavailable
+                            <i class="fas fa-times"></i>
+                        </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text" th:text="${bike.brand} + ' ' + ${bike.model} + ' ' + ${bike.color}">Bike Details</p>
+                            <p class="card-text">
+                                Going to
+                                <a th:text="${bike.targetLocation.address}" class="badge bg-info" th:href="@{/office/{targ}/bike/list(targ=${bike.targetLocation.id})}"></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="unavailableBox" th:if="${#lists.isEmpty(bikes)}">
+        <h2 class="py-5">Sorry! we don't have bikes right now.</h2>
+    </div>
+    <div id="arrivingList" th:unless="${#lists.isEmpty(incomingBikes)}">
+        <h1 class="py-5" th:text="'Bike(s) arriving ' + ${office.address}">Arriving Bike</h1>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col" th:each="bike : ${incomingBikes}">
+                <div class="card">
+                    <div class="border-info">
+                        <div class="card-header">
+                            <span class="badge rounded-pill bg-secondary">
+                                <i class="fas fa-clock"></i>
+                                Incoming
+                            </span>
+                        </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text" th:text="${bike.brand} + ' ' + ${bike.model} + ' ' + ${bike.color}">Bike Details</p>
+                            <p class="card-text">
+                                Coming from
+                                <a th:text="${bike.sourceLocation.address}" class="badge bg-secondary" th:href="@{/office/{targ}/bike/list(targ=${bike.sourceLocation.id})}"></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

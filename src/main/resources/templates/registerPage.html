@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general :: headerfiles"></th:block>
+    <title>Register Customer</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="align-items-center" style="max-width: 600px">
+            <div class="container-md col">
+                <div class="card m-4">
+                    <article class="card-body">
+                    <h4 class="card-title text-center">
+                        <span th:unless="${update}">
+                            Register
+                        </span>
+                        <span th:if="${update}">
+                            Update Details
+                        </span>
+                    </h4>
+                    <hr>
+                    <div th:if="${success}" th:utext="${success}" class="alert alert-success text-center"></div>
+                    <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
+                    <form th:action="${update} ? '/dashboard/update' : '/register'" th:object="${customerInfo}" method="post">
+
+                        <label class="form-label">Name</label>
+                        <div class="input-group mb-3">
+                            <input required type="text" class="form-control" placeholder="First Name" aria-label="Fist Name" th:field="*{firstName}">
+                            <input type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" th:field="*{lastName}">
+                        </div>
+
+                        <label for="emailId" class="form-label">Email ID</label>
+                        <div class="input-group mb-3">
+                            <input required type="email" class="form-control" id="emailId" th:field="*{emailId}">
+                        </div>
+
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <div class="input-group mb-3">
+                            <input required type="number" class="form-control" id="phoneNumber" th:field="*{phoneNumber}">
+                        </div>
+
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group mb-3">
+                            <input required type="password" class="form-control" id="password" th:field="*{password}">
+                        </div>
+
+<!--                        <div class="mb-3 form-check">-->
+<!--                            <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+<!--                            <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+<!--                        </div>-->
+                        <button type="submit" class="btn btn-primary" th:unless="${update}">
+                            Submit
+                        </button>
+                        <button type="submit" class="btn btn-danger" th:if="${update}">
+                            Update
+                        </button>
+                    </form>
+                </article>
+                    <div th:unless="${update}" class="card-footer">
+                    <p class="text-center">
+                        Have an account already?
+                        <a href="/login">Login Here</a>
+                    </p>
+                </div>
+                </div>
+            </div> <!-- card.// -->
+        </div> <!-- col.// -->
+    </div> <!-- row.// -->
+</div>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

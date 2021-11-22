@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general.html :: headerfiles"></th:block>
+    <title>Welcome</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container">
+    <div class="container">
+      <div class="jumbotron">
+          <div th:if="${success}" th:utext="${success}" class="alert alert-success text-center"></div>
+          <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
+          <h1>Welcome to Biker</h1>
+          <img style="height: 500px" class="img-fluid" src="https://dws2fz4z8ntt9.cloudfront.net/wp-content/uploads/sites/5/2016/08/15121007/Central-Park-Bike-Rentals.png" alt="Bike">
+      </div>
+    </div>
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

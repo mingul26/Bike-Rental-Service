@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general :: headerfiles"></th:block>
+    <title>Office Login Page</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container p-5">
+    <div class="row justify-content-center">
+        <div class="align-items-center" style="max-width: 600px">
+            <div class="container-md col">
+                <div class="card m-5">
+                    <div class="card-header text-center">
+                        <h3 class="m-0">
+                            Sign in
+                        </h3>
+                        <h5 class="m-0">
+                            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger">
+                                Manager
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="card-body p-5">
+                        <div th:if="${success}" th:utext="${success}" class="alert alert-success text-center"></div>
+                        <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
+                        <form action="/loginOffice" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
+                                    <input required name="username" class="form-control" placeholder="EmailID" type="email">
+                                </div> <!-- input-group.// -->
+                            </div> <!-- form-group// -->
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                    </div>
+                                    <input required class="form-control" name="password" placeholder="******" type="password">
+                                </div> <!-- input-group.// -->
+                            </div> <!-- form-group// -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block" name="customer"> Login  </button>
+                            </div>
+
+                            <!--                        <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>-->
+
+                        </form>
+                        <div class="form-group">
+                            <p class="text-center">Don't have an account? <a href="/office/add">Sign up</a></p>
+                        </div>
+                    </div>
+                    <div class="card-footer p-3">
+                        <p class="text-center m-0">
+                            Are you a
+                            <span class="badge rounded-pill bg-warning">
+                                Customer
+                            </span>
+                            ?
+                            <a href="/login">Login Here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>

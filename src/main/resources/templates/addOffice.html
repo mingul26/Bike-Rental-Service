@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/general.html :: headerfiles"></th:block>
+    <title>Add New Office</title>
+</head>
+<body>
+<header th:insert="fragments/header"></header>
+<main class="container" style="min-height: ">
+    <div class="row justify-content-center">
+        <div class="align-items-center" style="max-width: 720px">
+            <div class="container-md col">
+                <div class="card m-5">
+                    <div class="card-header text-center">
+                        <h3 class="m-0">Add new Office</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" th:object="${officeInfo}">
+                            <div class="form-floating mb-3">
+                                <input required type="text" th:field="*{address}" class="form-control" id="location" placeholder="name@example.com">
+                                <label for="location">Address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input required type="text" th:field="*{managerName}" class="form-control" id="managerName" placeholder="name@example.com">
+                                <label for="managerName">ManagerName</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Email ID</label>
+                                <div class="table-responsive update-contact">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Type</th>
+                                            <th>Contact</th>
+                                            <th>
+                                                <button type="button" name="addEmailRow" class="btn btn-outline-success"
+                                                        data-update-contacts-url="/office/addEmail">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tblEmails">
+                                        <tr th:fragment="emails" th:each="email,rowStat : ${officeInfo.emailBook}">
+                                            <td th:text="${rowStat.count}">1</td>
+                                            <td>
+                                                <input type="hidden"
+                                                       th:field="${officeInfo.emailBook[__${rowStat.index}__].id}">
+                                                <select class="custom-select"
+                                                        th:field="${officeInfo.emailBook[__${rowStat.index}__].type}"
+                                                        th:errorclass="is-invalid">
+                                                    <option hidden value="">Email Type</option>
+                                                    <option selected value="home">Home</option>
+                                                    <option value="business">Business</option>
+                                                    <option value="mobile">Other</option>
+                                                </select>
+                                                <div th:if="${#fields.hasErrors('${officeInfo.emailBook[__${rowStat.index}__].type}')}"
+                                                     class="invalid-feedback"
+                                                     th:errors="${officeInfo.emailBook[__${rowStat.index}__].type}"></div>
+                                            </td>
+                                            <td>
+                                                <input required class="form-control" type="email"
+                                                       th:field="${officeInfo.emailBook[__${rowStat.index}__].value}"
+                                                       th:errorclass="is-invalid"/>
+                                                <div th:if="${#fields.hasErrors('${officeInfo.emailBook[__${rowStat.index}__].value}')}"
+                                                     class="invalid-feedback"
+                                                     th:errors="${officeInfo.emailBook[__${rowStat.index}__].value}"></div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" th:unless="${officeInfo.emailBook.size() == 1}">
+                                                    <button type="button" name="removeEmail" th:value="${rowStat.index}"
+                                                            class="btn btn-outline-danger"
+                                                            data-update-contacts-url="/office/removeEmail">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="table-responsive update-phone">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Type</th>
+                                            <th>Contact</th>
+                                            <th>
+                                                <button type="button" name="addPhone"
+                                                        class="btn btn-outline-success"
+                                                        data-update-contacts-url="/office/addPhone">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tblPhones">
+                                        <tr th:fragment="phoneNumbers" th:each="phone,rowStat : ${officeInfo.phoneBook}">
+                                            <td th:text="${rowStat.count}">1</td>
+                                            <td>
+                                                <input type="hidden"
+                                                       th:field="${officeInfo.phoneBook[__${rowStat.index}__].id}">
+                                                <select class="custom-select"
+                                                        th:field="${officeInfo.phoneBook[__${rowStat.index}__].type}"
+                                                        th:errorclass="is-invalid">
+                                                    <option hidden value="">Phone Type</option>
+                                                    <option selected value="Mobile">Mobile</option>
+                                                    <option value="Home">Home</option>
+                                                    <option value="Work">Work</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                                <div th:if="${#fields.hasErrors('${officeInfo.phoneBook[__${rowStat.index}__].type}')}"
+                                                     class="invalid-feedback"
+                                                     th:errors="${officeInfo.phoneBook[__${rowStat.index}__].type}"></div>
+                                            </td>
+                                            <td>
+                                                <input required class="form-control" type="text"
+                                                       th:field="${officeInfo.phoneBook[__${rowStat.index}__].value}"
+                                                       th:errorclass="is-invalid"/>
+                                                <div th:if="${#fields.hasErrors('${officeInfo.phoneBook[__${rowStat.index}__].value}')}"
+                                                     class="invalid-feedback"
+                                                     th:errors="${officeInfo.phoneBook[__${rowStat.index}__].value}"></div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" th:unless="${officeInfo.phoneBook.size() == 1}">
+                                                    <button type="button" name="removePhone" th:value="${rowStat.index}"
+                                                            class="btn btn-outline-danger"
+                                                            data-update-contacts-url="/office/removePhone">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input required type="password" th:field="*{password}" class="form-control" id="password" placeholder="name@example.com">
+                                <label for="password">Password</label>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Create Office">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:insert="fragments/footer"></footer>
+<th:block th:include="fragments/general :: footerfiles"></th:block>
+</body>
+</html>
