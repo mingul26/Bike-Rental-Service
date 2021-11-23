@@ -28,14 +28,15 @@
                 <h6 class="card-subtitle mb-2 text-muted">Brand, Model</h6>
             </div>
         </div>
-
         <!--        Return Location Input-->
-        <div class="form-group">
-            <label for="returnLocation">Target Location</label>
-            <select id="returnLocation" required th:field="*{returnLocation}" class="form-control">
-            <option selected hidden value="">Select an option</option>
-            <option th:each="location : ${officeList}" th:value="${location.id}" th:text="${location.address}"></option>
-            </select>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Target Location</h5>
+                <select id="returnLocation" required th:field="*{returnLocation}" class="form-control">
+                    <option selected hidden value="">Select an option</option>
+                    <option th:each="location : ${officeList}" th:unless="${location.id == reservationInfo.pickupLocation.id}" th:value="${location.id}" th:text="${location.address}"></option>
+                </select>
+            </div>
         </div>
         <div class="btn-group">
             <button type="submit" class="btn btn-outline-success">Reserve</button>
