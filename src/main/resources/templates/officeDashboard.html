@@ -13,14 +13,14 @@
             <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
             <h2>Welcome to your dashboard <span th:text="${office.managerName}" ></span></h2>
         </div>
-        <div class="row row-cols-1 row-cols-md-1 g-4">
+        <div class="row row-cols-1 g-3">
             <div class="col">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Active  Reservations</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-2">
                             <div class="col" th:each="booking : ${activeRes}">
                                 <div class="card">
                                     <div class="row g-0">
@@ -82,7 +82,7 @@
                         <h4 class="card-title">Bikes Available Here</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row row-cols-1 row-cols-md-4 g-4">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
                             <div class="col" th:each="bike : ${bikes}">
                                 <div class="card">
                                     <div class="card-header">
@@ -116,7 +116,7 @@
                         <h4 class="card-title">Completed drops here</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-2">
                             <div class="col" th:each="booking : ${completedDrops}">
                                 <div class="card">
                                     <div class="row g-0">
@@ -165,7 +165,7 @@
                         <h4 class="card-title">Completed Pickups from here</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-2">
                             <div class="col" th:each="booking : ${completedPickups}">
                                 <div class="card">
                                     <div class="row g-0">
