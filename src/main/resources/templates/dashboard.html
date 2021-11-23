@@ -13,7 +13,7 @@
             <div th:if="${error}" th:utext="${error}" class="alert alert-danger text-center"></div>
             <h2>Welcome to your dashboard <span th:text="${user.firstName}" ></span></h2>
         </div>
-        <div class="row row-cols-1 row-cols-md-1 g-4">
+        <div class="">
             <div class="d-flex align-items-start">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <button class="nav-link active" id="v-pills-activeRes-tab" data-bs-toggle="pill" data-bs-target="#v-pills-activeRes" type="button" role="tab" aria-controls="v-pills-activeRes" aria-selected="true">Active Reservations</button>
@@ -21,7 +21,7 @@
                     <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</button>
                     <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
                 </div>
-                <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-content flex-grow-1" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-activeRes" role="tabpanel" aria-labelledby="v-pills-activeRes-tab">
                         <div class="row row-cols-sm-1 row-cols-md-2 g-3">
                             <div class="col" th:each="booking : ${activeRes}">
@@ -31,9 +31,9 @@
                                             <div class="card-body">
                                                 <div class="card">
                                                     <div class="card-header">
-                                            <span>
-                                                <i class="fas fa-bicycle"></i>
-                                            </span>
+                                                        <span>
+                                                            <i class="fas fa-bicycle"></i>
+                                                        </span>
                                                     </div>
                                                     <div class="card-body">
                                                         <p class="card-text" th:text="${booking.bike.brand}">Bike Details</p>
@@ -45,21 +45,18 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                        <span class="badge rounded-pill bg-warning">
-                                            Source
-                                        </span>
-                                                            <h5 class="card-title" th:text="${booking.pickupLocation.address}">Card title</h5>
-                                                            <p class="card-text"><small class="text-muted" th:text="${booking.pickupTimestamp}">Time</small></p>
-                                                            <hr>
-                                                            <span class="badge rounded-pill bg-info">
-                                            Destination
-                                        </span>
-                                                            <h5 class="card-title" th:text="${booking.returnLocation.address}">Card title</h5>
-                                                            <p class="card-text"><small class="text-muted" th:text="${booking.returnTimestamp}">Time</small></p>
-                                                            <p class="card-text" th:text="'₹ ' + ${booking.amount}">Amount</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <span class="badge rounded-pill bg-warning">
+                                                    Source
+                                                </span>
+                                                <h5 class="card-title" th:text="${booking.pickupLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.pickupTimestamp}">Time</small></p>
+                                                <hr>
+                                                <span class="badge rounded-pill bg-info">
+                                                    Destination
+                                                </span>
+                                                <h5 class="card-title" th:text="${booking.returnLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.returnTimestamp}">Time</small></p>
+                                                <p class="card-text" th:text="'₹ ' + ${booking.amount}">Amount</p>
                                             </div>
                                         </div>
                                     </div>
@@ -68,49 +65,40 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="v-pills-pastRes" role="tabpanel" aria-labelledby="v-pills-pastRes-tab">
-                        <div class="col">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Past  Reservations</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row row-cols-1 row-cols-md-2 g-4">
-                                        <div class="col" th:each="booking : ${pastRes}">
-                                            <div class="card">
-                                                <div class="row g-0">
-                                                    <div class="col-md-4">
-                                                        <div class="card-body">
-                                                            <div class="card">
-                                                                <div class="card-header">
-                                            <span>
-                                                <i class="fas fa-bicycle"></i>
-                                            </span>
-                                                                </div>
-                                                                <div class="card-body">
-                                                                    <p class="card-text" th:text="${booking.bike.brand}">Bike Details</p>
-                                                                    <p class="card-text" th:text="${booking.bike.model}">Bike Details</p>
-                                                                    <p class="card-text" th:text="${booking.bike.color}">Bike Details</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                        <div class="row row-cols-sm-1 row-cols-md-2 g-3">
+                            <div class="col" th:each="booking : ${pastRes}">
+                                <div class="card">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <div class="card-body">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <span>
+                                                            <i class="fas fa-bicycle"></i>
+                                                        </span>
                                                     </div>
-                                                    <div class="col-md-8">
-                                                        <div class="card-body">
-                                        <span class="badge rounded-pill bg-warning">
-                                            Source
-                                        </span>
-                                                            <h5 class="card-title" th:text="${booking.pickupLocation.address}">Card title</h5>
-                                                            <p class="card-text"><small class="text-muted" th:text="${booking.pickupTimestamp}">Time</small></p>
-                                                            <hr>
-                                                            <span class="badge rounded-pill bg-info">
-                                            Destination
-                                        </span>
-                                                            <h5 class="card-title" th:text="${booking.returnLocation.address}">Card title</h5>
-                                                            <p class="card-text"><small class="text-muted" th:text="${booking.returnTimestamp}">Time</small></p>
-                                                            <p class="card-text" th:text="'₹ ' + ${booking.amount}">Amount</p>
-                                                        </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text" th:text="${booking.bike.brand}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.model}">Bike Details</p>
+                                                        <p class="card-text" th:text="${booking.bike.color}">Bike Details</p>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <span class="badge rounded-pill bg-warning">
+                                                    Source
+                                                </span>
+                                                <h5 class="card-title" th:text="${booking.pickupLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.pickupTimestamp}">Time</small></p>
+                                                <hr>
+                                                <span class="badge rounded-pill bg-info">
+                                                    Destination
+                                                </span>
+                                                <h5 class="card-title" th:text="${booking.returnLocation.address}">Card title</h5>
+                                                <p class="card-text"><small class="text-muted" th:text="${booking.returnTimestamp}">Time</small></p>
+                                                <p class="card-text" th:text="'₹ ' + ${booking.amount}">Amount</p>
                                             </div>
                                         </div>
                                     </div>
